@@ -1,0 +1,48 @@
+{
+	"name": "james-butler-backend",
+	"version": "0.0.0",
+	"description": "Backend for the James Butler to handle REST API calls and logic for serving web and mobile apps",
+	"main": "src/JamesButler.js",
+	"scripts": {
+		"build": "rm -rf dist/* && babel src --out-dir dist --copy-files",
+		"docs": "node_modules/.bin/docsify serve ./docs",
+		"server": "nodemon --delay 500ms --exec babel-node src/Flappy.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tokeroed/james-butler-backend.git"
+	},
+	"author": "Tokerød Plus",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/tokeroed/james-butler-backend/issues"
+	},
+	"homepage": "https://github.com/tokeroed/james-butler-backend#readme",
+	"devDependencies": {
+		"@babel/cli": "^7.17.10",
+		"@babel/core": "^7.18.5",
+		"@babel/node": "^7.18.5",
+		"@babel/polyfill": "^7.12.1",
+		"@babel/preset-env": "^7.18.2",
+		"docsify": "^4.12.2",
+		"docsify-cli": "^4.4.4",
+		"libphonenumber-js": "^1.10.7",
+		"nodemon": "^2.0.16",
+		"webpack": "^5.73.0",
+		"webpack-cli": "^4.10.0"
+	},
+	"dependencies": {
+		"axios": "^0.27.2",
+		"connect-mongo": "^4.6.0",
+		"cors": "^2.8.5",
+		"dayjs": "^1.11.3",
+		"dotenv": "^16.0.1",
+		"express": "^4.18.1",
+		"express-locale": "^2.0.1",
+		"express-session": "^1.17.3",
+		"express-validator": "^6.14.2",
+		"mongodb": "^4.7.0",
+		"tinify": "^1.6.1",
+		"uuid": "^8.3.2"
+	}
+}
