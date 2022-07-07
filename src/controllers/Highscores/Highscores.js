@@ -3,25 +3,19 @@ import Database from "../../services/Database";
 const Highscores = {
     async getHighscores(request, response) {
         try {
-            const { polyglot } = request;
-            
-            const categories = await Database.Categories.getCategories();
-
-            if (!categories.success) {
-                throw new InternalServerError(polyglot.t(categories.message));
-            }
-            
-            return response.json({ ...categories, message: polyglot.t(categories.message)});
+            const data = await Database.getHighscores();
+            response.json(data);
         } catch(error) {
             console.log(error);
         }
     },
-
+    
     async postHighscore(request, response){
+        const {userId, name, score} = request;
         try {
-            const {} = request;
-
-            return response.json()
+            const data = await Database.postHighscore({userId: userId, name: name, score: score});
+            
+            return response.json(data);
         } catch (error) {
             console.log(error);
         }
