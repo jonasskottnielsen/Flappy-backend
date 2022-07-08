@@ -37,7 +37,7 @@ const Database = {
 		let result = null;
 		try {
 			//result = await runQuery(`INSERT INTO highscores(userId, name, score) VALUES(?,?,?) ON DUPLICATE KEY UPDATE score=VALUES(score)`, [data.userId, data.name, data.score]);
-			result = await runQuery(`INSERT INTO highscores(userId, name, score) VALUES (?,?,?) ON DUPLICATE KEY UPDATE score = GREATEST(score, VALUES(score))`, [data.userId, data.name, data.score])
+			result = await runQuery(`INSERT INTO highscores(userId, name, score) VALUES (?,?,?) ON DUPLICATE KEY UPDATE score = GREATEST(score, VALUES(score)), name=VALUES(name)`, [data.userId, data.name, data.score])
 		} catch (error) {
 			console.log(error);
 		}
