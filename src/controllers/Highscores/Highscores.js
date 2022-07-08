@@ -4,6 +4,7 @@ const Highscores = {
     async getHighscores(request, response) {
         try {
             const data = await Database.getHighscores();
+			console.log(data)
             response.json(data);
         } catch(error) {
             console.log(error);
@@ -11,9 +12,10 @@ const Highscores = {
     },
     
     async postHighscore(request, response){
-        const {userId, name, score} = request;
+		console.log(request.body)
+        const {userId, name, score} = request.body;
         try {
-            const data = await Database.postHighscore({userId: userId, name: name, score: score});
+            const data = await Database.insertHighscore({userId: userId, name: name, score: score});
             
             return response.json(data);
         } catch (error) {

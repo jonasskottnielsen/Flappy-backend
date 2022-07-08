@@ -2,13 +2,12 @@ import '@babel/polyfill';
 
 import express from 'express';
 import cors from 'cors';
-import { PORT, PRODUCTION } from './config';
 import Api from './api';
 import Database from './services/Database';
 
-
 const app = express();
-app.use(cors({ credentials: true }));
+app.use(cors({ credentials: true, origin: ['localhost', 'flappy.tokeroedplus.com'] }));
+
 app.use(Api);
 
 const Flappy = {

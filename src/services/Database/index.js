@@ -1,7 +1,7 @@
 import mysql from 'mysql';
 import util from 'util';
 
-import { DB_HOST, DB_USERNAME, DB_NAME, DB_PASSWORD } from '../../Config/index.js';
+import { DB_HOST, DB_USERNAME, DB_NAME, DB_PASSWORD } from '../../config';
 
 const pool = mysql.createPool({
 	connectionLimit: 10,
@@ -18,6 +18,14 @@ const Database = {
 		let result = null;
 		try {
 			result = await runQuery(`SELECT * from highscores`);
+
+			/* if (result.length > 0){
+				result.message = 'Scoreboard updated';
+				result.success = true
+			} else {
+				result.message = 'Something went wrong';
+				result.success = false
+			} */
 			return result;
 		} catch (error) {
 			console.log(error);
@@ -25,13 +33,24 @@ const Database = {
 	},
 
 	async insertHighscore(data) {
+		let returnMessage = {};
 		let result = null;
 		try {
-			result = await runQuery(`INSERT INTO highscores(userId, name, score) VALUES(?,?,?) ON DUPLICATE KEY UPDATE score=VALUES(score)`, [data.userId, data.name, data.score]);
+			//result = await runQuery(`INSERT INTO highscores(userId, name, score) VALUES(?,?,?) ON DUPLICATE KEY UPDATE score=VALUES(score)`, [data.userId, data.name, data.score]);
+			result = await runQuery(`INSERT INTO highscores(userId, name, score) VALUES (?,?,?) ON DUPLICATE KEY UPDATE score = GREATEST(score, VALUES(score))`, [data.userId, data.name, data.score])
 		} catch (error) {
 			console.log(error);
 		}
-		return result;
+		console.log(result);
+
+		if (result != null && result.affectedRows > 0){
+			returnMessage.message = 'Scoreboard updated';
+			returnMessage.success = true
+		} else {
+			returnMessage.message = 'Something went wrong';
+			returnMessage.success = false
+		}
+		return returnMessage;
 	},
 
 	async init() {
